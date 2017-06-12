@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta charset="UTF-8" />
+	<title>Insert title here</title>
+	<h:outputStylesheet library="css" name="estilo_template.css"></h:outputStylesheet>
+</h:head>
+<h:body>
+	<header>
+		
+		<div style="float: left">
+			<h:link outcome="/contato/Home.xhtml">
+				<h:graphicImage library="images" name="AgendaWeb.png" />
+			</h:link>
+		</div>
+		
+		<div style="float: right; margin-right: 110px">
+				<h:form style="display: inline-block">
+					<p:menubar styleClass="menu-sistema">
+						<p:submenu label="Cadastros">
+							<p:menuitem value="Contatos" outcome="/contato/PesquisaContato.xhtml"/>
+							<p:menuitem value="Usuários" />
+						</p:submenu>
+						
+						<p:submenu label="Relatórios">
+							<p:menuitem value="Contatos Favoritos" 
+										outcome="/contato/Favoritos.xhtml"/>
+						</p:submenu>
+						
+						<p:menuitem value="Sair" action="#{loginBean.logout}"/>
+					
+					</p:menubar>
+				</h:form>
+	</div>
+	</header>
+	
+	<div id="conteudo">
+		<ui:insert name="corpo">
+		
+		</ui:insert>
+	</div>
+	
+	
+	<div style="clear: both"></div>
+	
+	<p:separator style="margin-top: 20px"/>
+	
+	<footer>
+		<p>&#169; Matheus Bandeira</p>
+		<p>&#169; Emerson Machado Costa</p>
+		<p>&#169; Vanessa Paschoal de Oliveira</p>
+		<p>&#169; Lucas de Paiva Nascimento</p>
+		<p>&#169; Suellen Santos Alves da Silva</p>
+	</footer>
+</h:body>
+</html>

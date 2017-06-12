@@ -1,0 +1,94 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+
+	<ui:define name="corpo">
+		<h1>Pesquisa de Contatos</h1>
+
+		<h:form id="formPesquisa">
+			<p:messages></p:messages>
+			<p:toolbar style="margin-top:20px">
+				<f:facet name="left">
+					<p:button value="Novo" outcome="/contato/CadastroContato.xhtml"></p:button>
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable value="#{pesquisaContatoBean.contatos}" var="contato"
+				id="tablecontatos"
+				emptyMessage="Nenhum contato cadastrado em sua agenda"
+				paginator="true" rows="5" style="margin-top:20px">
+
+				<p:column headerText="Código" style="width:50px; text-align: center">
+					<h:outputLabel value="#{contato.id}" />
+				</p:column>
+
+				<p:column headerText="Nome" style="width:300px">
+					<h:outputLabel value="#{contato.nome}" />
+				</p:column>
+
+				<p:column headerText="Telefone" style="width:200px">
+					<h:outputLabel value="#{contato.telefone}" />
+				</p:column>
+
+				<p:column headerText="E-mail" style="width:300px">
+					<h:outputLabel value="#{contato.email}" />
+				</p:column>
+
+				<p:column headerText="Favorito"
+					style="width:100px; text-align:center">
+					<h:outputLabel value="#{contato.favorito}" />
+				</p:column>
+
+				<p:column headerText="Opções" style="width:100px; text-align:center">
+					<p:commandButton outcome="CadastroContato" icon="ui-icon-pencil"
+						onclick="PF('editarDialog').show()"
+						update=":formEditar" ajax="true">
+						<f:setPropertyActionListener value="#{contato}"
+							target="#{pesquisaContatoBean.contatoSelecionado}"></f:setPropertyActionListener>
+					</p:commandButton>
+					
+					
+					<p:commandButton icon="ui-icon-trash" 
+									 action="#{pesquisaContatoBean.excluir}" 
+									 update=":formPesquisa"
+									 ajax="true">
+						<f:setPropertyActionListener value="#{contato}" target="#{pesquisaContatoBean.contatoSelecionado}"></f:setPropertyActionListener>
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+
+
+		</h:form>
+
+		<p:dialog widgetVar="editarDialog" header="Editar contato">
+			<h:form id="formEditar">
+				<h:inputHidden value="#{pesquisaContatoBean.contatoSelecionado.id}" />
+				<h:panelGrid columns="2">
+					<h:outputLabel value="Nome" />
+					<p:inputText value="#{pesquisaContatoBean.contatoSelecionado.nome}" />
+					
+					<h:outputLabel value="Telefone" />
+					<p:inputText value="#{pesquisaContatoBean.contatoSelecionado.telefone}" />
+					
+					<h:outputLabel value="E-mail" />
+					<p:inputText value="#{pesquisaContatoBean.contatoSelecionado.email}" />
+					
+					<h:outputLabel value="Favorito ?" />
+					<p:selectOneRadio value="#{pesquisaContatoBean.contatoSelecionado.favorito}">
+						<f:selectItem itemLabel="Sim" itemValue="true" />
+						<f:selectItem itemLabel="Não" itemValue="false" />
+					</p:selectOneRadio>
+					
+					<h:outputLabel />
+					<p:commandButton value="Salvar" action="#{pesquisaContatoBean.editar}"
+									 update=":formEditar,:formPesquisa" onclick="editarDialog.close()" ajax="true"/>
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>
